@@ -13,13 +13,13 @@ const dashboardItems = [
     title: "Services",
     description: "Manage services and service packages.",
     icon: "02",
-    path: "/admin/services" // <-- Unlocked
+    path: "/admin/services"
   },
   {
     title: "Projects",
     description: "Add, edit and manage portfolio projects.",
     icon: "03",
-    path: null
+    path: "/admin/projects" // <-- Yahan Projects unlock kar diya
   },
   {
     title: "Skills",

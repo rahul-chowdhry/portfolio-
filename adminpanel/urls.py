@@ -19,6 +19,10 @@ from .views import (
     AdminServiceDetailAPIView,
     AdminServicePackageListCreateAPIView,
     AdminServicePackageDetailAPIView,
+    AdminProjectListCreateAPIView,
+    AdminProjectDetailAPIView,
+    AdminProjectImageListCreateAPIView,
+    AdminProjectImageDetailAPIView,
 )
 
 urlpatterns = [
@@ -55,4 +59,12 @@ urlpatterns = [
     # Service Packages
     path("packages/", AdminServicePackageListCreateAPIView.as_view(), name="admin-packages-list"),
     path("packages/<int:pk>/", AdminServicePackageDetailAPIView.as_view(), name="admin-packages-detail"),
+
+    # Projects
+    path("projects/", AdminProjectListCreateAPIView.as_view(), name="admin-projects-list"),
+    path("projects/<int:pk>/", AdminProjectDetailAPIView.as_view(), name="admin-projects-detail"),
+
+    # Project Images
+    path("project-images/", AdminProjectImageListCreateAPIView.as_view(), name="admin-project-images-list"),
+    path("project-images/<int:pk>/", AdminProjectImageDetailAPIView.as_view(), name="admin-project-images-detail"),
 ]

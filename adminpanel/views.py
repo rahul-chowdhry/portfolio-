@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 # Portfolio models and serializers
 from portfolio.models import (
     Profile, Skill, Experience, Education, SocialLink, 
-    Service, ServicePackage
+    Service, ServicePackage, Project, ProjectImage
 )
 from portfolio.serializers import (
     ProfileSerializer, 
@@ -17,7 +17,9 @@ from portfolio.serializers import (
     EducationSerializer,
     SocialLinkSerializer,
     ServiceSerializer,
-    ServicePackageSerializer
+    ServicePackageSerializer,
+    ProjectSerializer,
+    ProjectImageSerializer
 )
 
 # Contact models and serializers
@@ -249,3 +251,31 @@ class AdminServicePackageDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = ServicePackage.objects.all()
     serializer_class = ServicePackageSerializer
+
+
+# ==========================================
+# PROJECTS ADMIN APIs
+# ==========================================
+class AdminProjectListCreateAPIView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Project.objects.all().order_by("display_order", "-created_at")
+    serializer_class = ProjectSerializer
+
+class AdminProjectDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
+# ==========================================
+# PROJECT IMAGES (GALLERY) ADMIN APIs
+# ==========================================
+class AdminProjectImageListCreateAPIView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = ProjectImage.objects.all().order_by("project", "display_order")
+    serializer_class = ProjectImageSerializer
+
+class AdminProjectImageDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = ProjectImage.objects.all()
+    serializer_class = ProjectImageSerializer

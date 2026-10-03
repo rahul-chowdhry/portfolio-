@@ -231,7 +231,7 @@ export const adminDeleteMessage = async (id) => {
 };
 
 // ==========================================
-// SERVICES MANAGEMENT
+// SERVICES & PACKAGES MANAGEMENT
 // ==========================================
 export const adminGetServices = async () => {
   const token = localStorage.getItem("tech_world_admin_token");
@@ -265,9 +265,6 @@ export const adminDeleteService = async (id) => {
   return response.data;
 };
 
-// ==========================================
-// SERVICE PACKAGES MANAGEMENT
-// ==========================================
 export const adminGetPackages = async () => {
   const token = localStorage.getItem("tech_world_admin_token");
   const response = await adminApi.get("/admin/packages/", {
@@ -295,6 +292,72 @@ export const adminUpdatePackage = async (id, data) => {
 export const adminDeletePackage = async (id) => {
   const token = localStorage.getItem("tech_world_admin_token");
   const response = await adminApi.delete(`/admin/packages/${id}/`, {
+    headers: { Authorization: `Token ${token}` },
+  });
+  return response.data;
+};
+
+// ==========================================
+// PROJECTS & GALLERY MANAGEMENT
+// ==========================================
+export const adminGetProjects = async () => {
+  const token = localStorage.getItem("tech_world_admin_token");
+  const response = await adminApi.get("/admin/projects/", {
+    headers: { Authorization: `Token ${token}` },
+  });
+  return response.data;
+};
+
+export const adminCreateProject = async (data) => {
+  const token = localStorage.getItem("tech_world_admin_token");
+  const config = { headers: { Authorization: `Token ${token}` } };
+  if (data instanceof FormData) {
+    config.headers["Content-Type"] = "multipart/form-data";
+  }
+  const response = await adminApi.post("/admin/projects/", data, config);
+  return response.data;
+};
+
+export const adminUpdateProject = async (id, data) => {
+  const token = localStorage.getItem("tech_world_admin_token");
+  const config = { headers: { Authorization: `Token ${token}` } };
+  if (data instanceof FormData) {
+    config.headers["Content-Type"] = "multipart/form-data";
+  }
+  const response = await adminApi.patch(`/admin/projects/${id}/`, data, config);
+  return response.data;
+};
+
+export const adminDeleteProject = async (id) => {
+  const token = localStorage.getItem("tech_world_admin_token");
+  const response = await adminApi.delete(`/admin/projects/${id}/`, {
+    headers: { Authorization: `Token ${token}` },
+  });
+  return response.data;
+};
+
+// Project Images (Gallery)
+export const adminGetProjectImages = async () => {
+  const token = localStorage.getItem("tech_world_admin_token");
+  const response = await adminApi.get("/admin/project-images/", {
+    headers: { Authorization: `Token ${token}` },
+  });
+  return response.data;
+};
+
+export const adminCreateProjectImage = async (data) => {
+  const token = localStorage.getItem("tech_world_admin_token");
+  const config = { headers: { Authorization: `Token ${token}` } };
+  if (data instanceof FormData) {
+    config.headers["Content-Type"] = "multipart/form-data";
+  }
+  const response = await adminApi.post("/admin/project-images/", data, config);
+  return response.data;
+};
+
+export const adminDeleteProjectImage = async (id) => {
+  const token = localStorage.getItem("tech_world_admin_token");
+  const response = await adminApi.delete(`/admin/project-images/${id}/`, {
     headers: { Authorization: `Token ${token}` },
   });
   return response.data;

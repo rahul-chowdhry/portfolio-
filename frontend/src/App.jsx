@@ -19,7 +19,8 @@ import ExperienceManage from "./admin/ExperienceManage";
 import EducationManage from "./admin/EducationManage";
 import SocialLinksManage from "./admin/SocialLinksManage";
 import MessagesManage from "./admin/MessagesManage";
-import ServicesManage from "./admin/ServicesManage"; // <-- Nayi file import ki
+import ServicesManage from "./admin/ServicesManage";
+import ProjectsManage from "./admin/ProjectsManage"; // <-- Nayi file import ki
 
 function PublicLayout() {
   return (
@@ -54,7 +55,8 @@ function App() {
         <Route path="/admin/education" element={<EducationManage />} />
         <Route path="/admin/social-links" element={<SocialLinksManage />} />
         <Route path="/admin/messages" element={<MessagesManage />} />
-        <Route path="/admin/services" element={<ServicesManage />} /> {/* <-- Naya route */}
+        <Route path="/admin/services" element={<ServicesManage />} />
+        <Route path="/admin/projects" element={<ProjectsManage />} /> {/* <-- Naya Route */}
 
         <Route path="/*" element={<PublicLayout />} />
       </Routes>
