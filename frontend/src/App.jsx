@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Projects from "./pages/Projects";
-import ProjectDetail from "./pages/ProjectDetail";
+import ProjectDetail from "./pages/Projectdetail";
 import Contact from "./pages/Contact";
 
 import AdminLogin from "./admin/AdminLogin";
