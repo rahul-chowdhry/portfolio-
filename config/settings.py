@@ -75,6 +75,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
 
+    # Serve static files (admin CSS etc.) in production
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     # CORS must be before CommonMiddleware
     "corsheaders.middleware.CorsMiddleware",
 
@@ -194,6 +197,15 @@ STATIC_URL = "static/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
 
 # =========================================================
 # MEDIA FILES
@@ -236,12 +248,25 @@ FRONTEND_URL = os.getenv(
 ).rstrip("/")
 
 
-CORS_ALLOWED_ORIGINS = [
+# Extra origins can be given comma-separated in CORS_ALLOWED_ORIGINS env var
+EXTRA_ORIGINS = [
+    origin.strip().rstrip("/")
+    for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
+CORS_ALLOWED_ORIGINS = list(dict.fromkeys([
     FRONTEND_URL,
+    *EXTRA_ORIGINS,
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:4173",
     "http://127.0.0.1:4173",
+]))
+
+# Allow all Vercel deployments (production + preview URLs)
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://[\w-]+\.vercel\.app$",
 ]
 
 
@@ -249,13 +274,22 @@ CORS_ALLOWED_ORIGINS = [
 # CSRF
 # =========================================================
 
-CSRF_TRUSTED_ORIGINS = [
+CSRF_TRUSTED_ORIGINS = list(dict.fromkeys([
     FRONTEND_URL,
+    *EXTRA_ORIGINS,
+    "https://*.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:4173",
     "http://127.0.0.1:4173",
-]
+]))
+
+
+# =========================================================
+# PROXY / HTTPS (Render, Railway etc. sit behind a proxy)
+# =========================================================
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # =========================================================
